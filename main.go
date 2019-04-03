@@ -7,10 +7,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/andyleap/gencode/schema"
+	"github.com/huydx/gencode/schema"
 	"github.com/kr/pretty"
 
-	_ "github.com/andyleap/gencode/backends/golang"
+	_ "github.com/huydx/gencode/backends/golang"
 )
 
 func main() {
@@ -53,7 +53,7 @@ func main() {
 		log.Fatalf("error opening file %s", SchemaFile)
 	}
 
-	s, err := schema.ParseSchema(file)
+	s, err := schema.ParseSchema2(SchemaFile)
 
 	if Debug {
 		pretty.Print(s)

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"text/template"
 
-	"github.com/andyleap/gencode/schema"
+	"github.com/huydx/gencode/schema"
 )
 
 var (

@@ -3,10 +3,11 @@ package golang
 import (
 	"fmt"
 
-	"github.com/andyleap/gencode/schema"
+	"github.com/huydx/gencode/schema"
 )
 
 func (w *Walker) WalkTypeDef(t schema.Type) (*StringBuilder, error) {
+	fmt.Printf("t::::%v\n", t)
 	switch tt := t.(type) {
 	case *schema.ArrayType:
 		return w.WalkArrayDef(tt)
@@ -33,7 +34,7 @@ func (w *Walker) WalkTypeDef(t schema.Type) (*StringBuilder, error) {
 	case *schema.UnionType:
 		return w.WalkUnionDef(tt)
 	}
-	return nil, fmt.Errorf("No such type %T", t)
+	return nil, fmt.Errorf("No such type %T in WalkTypeDef.", t)
 }
 
 func (w *Walker) WalkTypeSize(t schema.Type, target string) (*StringBuilder, error) {
@@ -63,7 +64,7 @@ func (w *Walker) WalkTypeSize(t schema.Type, target string) (*StringBuilder, err
 	case *schema.UnionType:
 		return w.WalkUnionSize(tt, target)
 	}
-	return nil, fmt.Errorf("No such type %T", t)
+	return nil, fmt.Errorf("No such type %T in WalkTypeSize.", t)
 }
 
 func (w *Walker) WalkTypeMarshal(t schema.Type, target string) (*StringBuilder, error) {
@@ -93,7 +94,7 @@ func (w *Walker) WalkTypeMarshal(t schema.Type, target string) (*StringBuilder, 
 	case *schema.UnionType:
 		return w.WalkUnionMarshal(tt, target)
 	}
-	return nil, fmt.Errorf("No such type %T", t)
+	return nil, fmt.Errorf("No such type %T in WalkTypeMarshal", t)
 }
 
 func (w *Walker) WalkTypeUnmarshal(t schema.Type, target string) (*StringBuilder, error) {
@@ -123,5 +124,5 @@ func (w *Walker) WalkTypeUnmarshal(t schema.Type, target string) (*StringBuilder
 	case *schema.UnionType:
 		return w.WalkUnionUnmarshal(tt, target)
 	}
-	return nil, fmt.Errorf("No such type %T", t)
+	return nil, fmt.Errorf("No such type %T in WalkTypeUnmarshal", t)
 }

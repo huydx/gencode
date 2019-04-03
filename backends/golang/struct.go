@@ -3,7 +3,7 @@ package golang
 import (
 	"fmt"
 
-	"github.com/andyleap/gencode/schema"
+	"github.com/huydx/gencode/schema"
 )
 
 func (w *Walker) WalkStruct(s *schema.Struct) (parts *StringBuilder, err error) {
@@ -13,20 +13,9 @@ func (w *Walker) WalkStruct(s *schema.Struct) (parts *StringBuilder, err error) 
 		Signed: false,
 		VarInt: true,
 	}
-	parts.Append(fmt.Sprintf(`type %s struct {
-	`, s.Name))
-	for _, f := range s.Fields {
-		p, err := w.WalkFieldDef(f)
-		if err != nil {
-			return nil, err
-		}
-		parts.Join(p)
-		parts.Append(`
-	`)
-	}
 	if !s.Framed {
-		parts.Append(fmt.Sprintf(`}
-	
+		parts.Append(fmt.Sprintf(`
+
 func (d *%s) Size() (s uint64) {
 	`, s.Name))
 	} else {
@@ -65,6 +54,7 @@ func (d *%s) FramedSize() (s uint64, us uint64) {
 
 	if s.Framed {
 		parts.Append(fmt.Sprintf(`
+
 func (d *%s) Size() (s uint64) {
 	s, _ = d.FramedSize()
 	return
